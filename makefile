@@ -69,7 +69,7 @@ build-all: \
 clean-all: \
 	clean-boot \
 	clean-kernel
-	@rm -r $(BUILDDIR)
+	@rm -r $(BUILDDIR) || true
 
 #
 # boot target

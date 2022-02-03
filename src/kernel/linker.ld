@@ -1,10 +1,10 @@
-ENTRY("kernel_main")
+ENTRY("kernel_loader")
 
 SECTIONS
 {
-    .text 0x1400 :
+    .text 0x900 :
     {
-        *(.text*);
+		*(.text*)
     }
     .rodata :
     {

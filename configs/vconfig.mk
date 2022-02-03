@@ -9,4 +9,3 @@ CCFLAGS=-m32 \
 
 ASM:= nasm
 AFLAGS =-f bin
-	

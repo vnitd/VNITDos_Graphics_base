@@ -26,4 +26,4 @@ makebootdir:
 	@$(ASM) $< $(AFLAGS) -o $(BOOTBUILDDIR)/$@
 
 clean:
-	@rm -r $(BOOTBUILDDIR)
+	@rm -r $(BOOTBUILDDIR) || true

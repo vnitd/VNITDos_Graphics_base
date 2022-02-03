@@ -12,12 +12,14 @@ ifeq ($(KERNOBJDIR),)
 KERNOBJDIR := $(KERNBUILDDIR)/obj
 endif
 
-KERNOBJ=main.o
+KERNOBJ=loader.o \
+		main.o
 
 KOBJF = $(KERNOBJ:%=$(KERNOBJDIR)/%)
 
 CCFLAGS += \
 		-I$(SOLUTIONDIR)/include
+AFLAGS =-f elf32
 
 .PHONY: all makekerndir clean
 all: \
@@ -33,6 +35,9 @@ makekerndir:
 %.o: %.c
 	@$(ECHO) "  CC    " $(KERNOBJDIR)/$@
 	@$(CC) $(CCFLAGS) -c -o $(KERNOBJDIR)/$@ $<
+%.o: %.cpp
+	@$(ECHO) "  CPP   " $(KERNOBJDIR)/$@
+	@$(CC) $(CCFLAGS) -c -o $(KERNOBJDIR)/$@ $<
 
 kernel.bin: linker.ld $(KERNOBJ)
 	@$(ECHO) "  LD    " $(KERNBUILDDIR)/$@
@@ -43,4 +48,4 @@ kernel.bin: linker.ld $(KERNOBJ)
 	dd if=/dev/zero of=$(KERNBUILDDIR)/$@ bs=1 seek=$$size count=$$(expr $$newsize - $$size)
 
 clean:
-	@rm -r $(KERNBUILDDIR)
+	@rm -r $(KERNBUILDDIR) || true

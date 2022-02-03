@@ -182,7 +182,7 @@ set_segments:
 	mov ecx, 64
 	rep movsd
 
-	jmp 0x08:0x1400
+	jmp 0x08:0x900
 
 loader_drivenum: db 0
 hexString: db '0x0000'

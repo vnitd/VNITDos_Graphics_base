@@ -38,10 +38,10 @@ typedef struct vbe_mode_info_structure {
 	uint8_t reserved1[206];
 } __attribute__((packed)) vbe_mode_info;
 
-void kernel_main(void)
+extern "C" void kernel_main(void)
 {
 	vbe_mode_info* info = (vbe_mode_info*)0x5000;
-	uint32_t *framebuffer = (uint32_t*)info->framebuffer;
+	uint32_t *framebuffer = (uint32_t*)(info->framebuffer);
 	framebuffer[5] = 0xffff0000;
 	while(1) {}
 }

@@ -25,7 +25,7 @@ use16
 	
 	;; READ FILETABLE INTO MEMORY SECOND
 	mov bl, 0x01		; Will be reading 2 sectors 
-	mov di, 0x1000		; Memory address to read sectors into (0x0000:0x1000)
+	mov di, 0x500		; Memory address to read sectors into (0x0000:0x1000)
 
 	mov dx, 0x1f2		; Sector count port
 	mov al, 0x02		; # of sector to read
@@ -37,12 +37,12 @@ use16
 
 	call load_sectors
 	
-	;; READ FILETABLE INTO MEMORY SECOND
-	xor bl, bl			; Will be reading 2 sectors 
-	mov di, 0x1400		; Memory address to read sectors into (0x0000:0x1000)
+	;; READ KERNEL INTO MEMORY THIRD
+	mov bl, 0x01		; Will be reading 2 sectors 
+	mov di, 0x900		; Memory address to read sectors into (0x0000:0x1000)
 
 	mov dx, 0x1f2		; Sector count port
-	mov al, 0x01		; # of sector to read
+	mov al, 0x02		; # of sector to read
 	out dx, al
 
 	mov dx, 0x1f3		; Sector # port
