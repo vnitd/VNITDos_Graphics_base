@@ -1,9 +1,13 @@
 {
     "editor.detectIndentation": false,
+<<<<<<< HEAD
 	"editor.insertSpaces": false,
 	"explorer.compactFolders": false,
 	"files.associations": {
 		"stdint.h": "c",
 		"cstdint": "c"
 	}
+=======
+	"editor.insertSpaces": false
+>>>>>>> 9c7c44bb5b78681a243eb6cea3cbf753c72bc496
 }
