@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "GCC",
+            "includePath": [
+                "include",
+				"include/kernel"
+            ]
+        }
+    ],
+    "version": 4
+}

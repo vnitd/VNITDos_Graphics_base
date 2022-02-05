@@ -1,3 +1,5 @@
 /build
 /VNITDos-Base_v0.1.img
 /src/asm/test.asm
+/src/kernel/common/stdpp.cpp
+/include/stdpp.hpp

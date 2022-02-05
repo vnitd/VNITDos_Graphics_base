@@ -13,12 +13,18 @@ KERNOBJDIR := $(KERNBUILDDIR)/obj
 endif
 
 KERNOBJ=loader.o \
+		drivers/graphics/font_char.o \
+		drivers/graphics/vbe.o \
+		drivers/graphics/svga.o \
 		main.o
 
 KOBJF = $(KERNOBJ:%=$(KERNOBJDIR)/%)
 
 CCFLAGS += \
-		-I$(SOLUTIONDIR)/include
+		-I$(SOLUTIONDIR)/include \
+		-I$(SOLUTIONDIR)/include/kernel
+CPPFLAGS= $(CCFLAGS) \
+		-fno-rtti
 AFLAGS =-f elf32
 
 .PHONY: all makekerndir clean
@@ -27,7 +33,8 @@ all: \
 	kernel.bin
 
 makekerndir:
-	@$(MKDIR) $(KERNOBJDIR)
+	@$(MKDIR) $(KERNOBJDIR)/common
+	@$(MKDIR) $(KERNOBJDIR)/drivers/graphics
 
 %.o: %.asm
 	@$(ECHO) "  ASM   " $(KERNOBJDIR)/$@
@@ -37,7 +44,7 @@ makekerndir:
 	@$(CC) $(CCFLAGS) -c -o $(KERNOBJDIR)/$@ $<
 %.o: %.cpp
 	@$(ECHO) "  CPP   " $(KERNOBJDIR)/$@
-	@$(CC) $(CCFLAGS) -c -o $(KERNOBJDIR)/$@ $<
+	@$(CC) $(CPPFLAGS) -c -o $(KERNOBJDIR)/$@ $<
 
 kernel.bin: linker.ld $(KERNOBJ)
 	@$(ECHO) "  LD    " $(KERNBUILDDIR)/$@

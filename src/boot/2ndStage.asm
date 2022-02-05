@@ -175,10 +175,13 @@ set_segments:
 	mov ss, ax
 	mov esp, 0x90000		; Set up stack pointer
 	
-	;; Set up VBE mode info block in memory to be easier to work with
-	;; 5000h memory block
+	mov esi, vbe_info_block
+	mov edi, 8400h
+	mov ecx, 64
+	rep movsd
+
 	mov esi, mode_info_block
-	mov edi, 5000h
+	mov edi, 8600h
 	mov ecx, 64
 	rep movsd
 

@@ -1,0 +1,13 @@
+{
+	"configurations": [
+		{
+			"inheritEnvironments": [
+				"msvc_x86"
+			],
+			"name": "x86-Debug",
+			"defines": [],
+			"intelliSenseMode": "linux-gcc-x86",
+			"compilerSwitches": "-std=c++17"
+		}
+	]
+  }
