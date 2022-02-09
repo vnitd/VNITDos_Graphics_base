@@ -1,5 +1,5 @@
 CC := gcc
-CCFLAGS=-m32 \
+CCFLAGS=-m64 \
 		-nostdlib \
 		-fno-builtin \
 		-fno-exceptions \

@@ -1,4 +1,5 @@
-#include <drivers/graphics/vbe.h>
+#include <utils.h>
+#include "vbe.h"
 
 vbe_info *info;
 vbe_mode_info *mode_info;
@@ -8,15 +9,17 @@ uint8_t red_pos, green_pos, blue_pos;
 
 void vbe_initialize()
 {
-	info = (vbe_info*) 0x8400;
-	mode_info = (vbe_mode_info*) 0x8600;
+	info = (vbe_info*) 0x8000;
+	mode_info = (vbe_mode_info*) 0x8200;
 	width = mode_info->width;
 	height = mode_info->height;
-	framebuffer = (uint32_t*)mode_info->framebuffer;
+	framebuffer = (uint32_t*)((uintptr_t)(mode_info->framebuffer));
 	red_pos = mode_info->red_position;
 	blue_pos = mode_info->blue_position;
 	green_pos = mode_info->green_position;
 }
+
+
 
 void drawPixel(uint16_t x, uint16_t y, uint32_t color)
 {

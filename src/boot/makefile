@@ -9,7 +9,7 @@ BOOTBUILDDIR := $(BUILDDIR)/boot
 endif
 
 BOOTBIN=bootSector.bin \
-		2ndStage.bin \
+		secondStage.bin \
 		fileTable.bin
 $(KERNOBJ:%=$(KERNOBJDIR)/%)
 
@@ -22,8 +22,8 @@ makebootdir:
 	@$(MKDIR) $(BOOTBUILDDIR)
 
 %.bin: %.asm
-	@$(ECHO) "  ASM   " $(BOOTBUILDDIR)/$@
-	@$(ASM) $< $(AFLAGS) -o $(BOOTBUILDDIR)/$@
+	@$(ECHO) "[ASM   ]" $(BOOTBUILDDIR)/$@
+	@$(ASM) -fbin $< -o $(BOOTBUILDDIR)/$@
 
 clean:
 	@rm -r $(BOOTBUILDDIR) || true

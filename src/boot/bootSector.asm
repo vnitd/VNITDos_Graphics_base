@@ -1,5 +1,5 @@
 ;;
-;; bootSector.asm
+;; bootSector.asm: the prolouge of the OS
 ;;
 
 use16
@@ -8,22 +8,8 @@ use16
 	
 	xor ax, ax
 	mov es, ax			; ES = 0
-
-	;; READ 2ND STAGE BOOTLOADER INTO MEMORY FIRST
-	mov bl, 0x02		; Will be reading 3 sectors 
-	mov di, 0x7e00		; Memory address to read sectors into (0x0000:0x7e00)
-
-	mov dx, 0x1f2		; Sector count port
-	mov al, 0x03		; # of sector to read
-	out dx, al
-
-	mov dx, 0x1f3		; Sector # port
-	mov al, 0x02		; Sector to start reading at (sectors are 1-based)
-	out dx, al
-
-	call load_sectors
 	
-	;; READ FILETABLE INTO MEMORY SECOND
+	;; READ FILETABLE INTO MEMORY FIRST
 	mov bl, 0x01		; Will be reading 2 sectors 
 	mov di, 0x500		; Memory address to read sectors into (0x0000:0x1000)
 
@@ -36,9 +22,23 @@ use16
 	out dx, al
 
 	call load_sectors
+
+	;; READ SECONDSTAGE INTO MEMORY SECOND
+	mov bl, 0x02		; Will be reading 3 sectors 
+	mov di, 0x7e00		; Memory address to read sectors into (0x0000:0x1000)
+
+	mov dx, 0x1f2		; Sector count port
+	mov al, 0x03		; # of sector to read
+	out dx, al
+
+	mov dx, 0x1f3		; Sector # port
+	mov al, 0x02		; Sector to start reading at (sectors are 1-based)
+	out dx, al
+
+	call load_sectors
 	
 	;; READ KERNEL INTO MEMORY THIRD
-	mov bl, 0x1F		; Will be reading 10 sectors 
+	mov bl, 0x1F		; Will be reading 31 sectors 
 	mov di, 0x900		; Memory address to read sectors into (0x0000:0x1000)
 
 	mov dx, 0x1f2		; Sector count port
@@ -52,8 +52,7 @@ use16
 	call load_sectors
 
 	mov dl, [drive_num]
-	jmp 0000h:7e00h
-
+	jmp 0x0:7e00h
 load_sectors:
 	mov dx, 0x1f6		; Head & drive # port
 	mov al, [drive_num]	; Drive # - hard disk 1
